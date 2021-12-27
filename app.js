@@ -8,7 +8,9 @@ const dotenv = require('dotenv'); // ortam değişkenlerini oluşturmak için da
 dotenv.config(); // burda ise kullandık.
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth'); // auth route dosyasını dahil ettik.
+
+
 
 const app = express();
 
@@ -28,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/auth', authRouter);  // auth route'ını kullandık.
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
