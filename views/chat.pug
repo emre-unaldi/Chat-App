@@ -1,0 +1,13 @@
+extends layout
+
+append stylesheets 
+  link(rel='stylesheet', href='/stylesheets/chat.css') 
+  // sadece index sayfasına dahil edilir.
+  // append ekleme yapar, block gibi ezmez
+  
+block content
+  div(ng-controller = "chatController")
+    | chat
+
+append javascripts
+  script(src="/javascripts/controller/indexController.js")

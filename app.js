@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const session = require('express-session'); // session işlemleri için 
+
 const passport = require('passport'); // google login için bu modülü dahil etmeliyiz.
 
 const dotenv = require('dotenv'); // ortam değişkenlerini oluşturmak için dahil ettik
@@ -11,6 +13,7 @@ dotenv.config(); // burda ise kullandık.
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth'); // auth route dosyasını dahil ettik.
+const chatRouter = require('./routes/chat')
 
 
 
@@ -31,10 +34,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
+// express-session 
+app.use(session({ 
+  secret: process.env.SESSION_SECRET_KEY,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge: 14 * 24 * 3600000 }
+}));
+
+// passport.js
 app.use(passport.initialize()); // google login için modülü bu şekilde kullanmalıyız.
+app.use(passport.session()); // session'ı passport.js ile kullanabilmek için tanımladık.
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);  // auth route'ını kullandık.
+app.use('/chat', chatRouter);
 
 
 // catch 404 and forward to error handler
