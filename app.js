@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const passport = require('passport'); // google login için bu modülü dahil etmeliyiz.
+
 const dotenv = require('dotenv'); // ortam değişkenlerini oluşturmak için dahil ettik
 dotenv.config(); // burda ise kullandık.
 
@@ -29,8 +31,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
+app.use(passport.initialize()); // google login için modülü bu şekilde kullanmalıyız.
+
 app.use('/', indexRouter);
 app.use('/auth', authRouter);  // auth route'ını kullandık.
+
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
