@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const session = require('express-session'); // session işlemleri için 
-
 const passport = require('passport'); // google login için bu modülü dahil etmeliyiz.
 
 const dotenv = require('dotenv'); // ortam değişkenlerini oluşturmak için dahil ettik
@@ -13,13 +12,17 @@ dotenv.config(); // burda ise kullandık.
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth'); // auth route dosyasını dahil ettik.
-const chatRouter = require('./routes/chat')
+const chatRouter = require('./routes/chat') // chat route dosyasını dahil ettik.
 
 
 
 const app = express();
 
-const db = require('./helpers/db')(); // veritabanı dahil edildi.
+// Helpers
+const db = require('./helpers/db')(); 
+
+// Middleware
+const isAuthenticated = require('./middleware/isAuthenticated');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,7 +42,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET_KEY,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge: 14 * 24 * 3600000 }
+  cookie: { maxAge: 14 * 24 * 3600000 }
 }));
 
 // passport.js
@@ -48,7 +51,7 @@ app.use(passport.session()); // session'ı passport.js ile kullanabilmek için t
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);  // auth route'ını kullandık.
-app.use('/chat', chatRouter);
+app.use('/chat', isAuthenticated, chatRouter); // middleware'ı chat router'ında kullandık
 
 
 // catch 404 and forward to error handler

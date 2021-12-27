@@ -17,7 +17,6 @@ passport.use(
     }, 
     ((accessToken, refreshToken, profile, done) => {
       const data = profile._json;
-      console.log(data);
 
       User.findOrCreate({ // plugin'i şema üzerinde kullanıyoruz.
         'googleId': data.sub
