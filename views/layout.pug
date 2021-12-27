@@ -2,6 +2,16 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    block stylesheets 
+      link(rel='stylesheet', href='/stylesheets/style.css') 
+      // her sayfada bulunur
+  body 
+    // ng-app -> sayfa yüklenmesi tamamlandığında angular'ın çalışmasını sağlar.
+    // ng-cloak -> angular'ın ilk açılışta build edilmesini sağlar.
+    div(ng-app = "chatApp", ng-cloak) 
+      block content  
+
+
+  block javascripts
+    script(src="/angular/angular.min.js") 
+    script(src="/javascripts/main.js") 

@@ -1,0 +1,17 @@
+{
+  "name": "chat-application",
+  "description": "",
+  "main": "",
+  "authors": [
+    "emre-unaldi <emree.unaldi@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "chat",
+    "nodejs"
+  ],
+  "homepage": "https://github.com/emre-unaldi/ChatApp",
+  "dependencies": {
+    "angular": "^1.8.2"
+  }
+}
