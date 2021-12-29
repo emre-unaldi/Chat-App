@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const RedisStore = require('./helpers/redisStore'); // redisStore ayar dosyasını dahil ettik.
+
 const session = require('express-session'); // session işlemleri için 
 const passport = require('passport'); // google login için bu modülü dahil etmeliyiz.
 
@@ -13,8 +15,6 @@ dotenv.config(); // burda ise kullandık.
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth'); // auth route dosyasını dahil ettik.
 const chatRouter = require('./routes/chat') // chat route dosyasını dahil ettik.
-
-
 
 const app = express();
 
@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'bower_components')));
 
 // express-session 
 app.use(session({ 
+  store: RedisStore, // bu satırı ekleyerek redis session store implementasyonunu sağladık.
   secret: process.env.SESSION_SECRET_KEY,
   resave: false,
   saveUninitialized: true,
