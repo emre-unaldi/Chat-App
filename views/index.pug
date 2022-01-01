@@ -1,20 +1,20 @@
 extends layout
 
-append stylesheets 
-  link(rel='stylesheet', href='/stylesheets/index.css') 
+append stylesheets
+  link(rel='stylesheet', href='/stylesheets/index.css')
   // sadece index sayfasına dahil edilir.
   // append ekleme yapar, block gibi ezmez
   link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
-  
+
 block content
-  div(ng-controller = "indexController")
-    .modal 
-      .modal__inner 
-        .modal__header 
+  div(ng-controller="indexController")
+    .modal
+      .modal__inner
+        .modal__header
           h2 Welcome, please login.
-        .modal__footer 
+        .modal__footer
           a(href='/auth/google')
-            i.fab.fa-google-plus-g(aria-hidden='true')
+            i.fa.fa-google-plus(aria-hidden='true')
             |   Login with Google+
 
 append javascripts
