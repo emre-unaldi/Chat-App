@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
 
     // Online kullanıcıları listeler.
     Users.list((users) => {
-        console.log(users);
+        io.emit('onlineList', users); // kullanıcılara ilettik
     });
 
     // Kullanıcı çıkış yaptığında ilgili kaydı siler. 
@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
         Users.remove(socket.request.user.googleId);
         // Online kullanıcıları listeler.
         Users.list((users) => {
-            console.log(users);
+            io.emit('onlineList', users);
         });
     });
 });
