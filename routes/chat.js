@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET chat home page. */
 router.get('/', (req, res, next) =>{
-  console.log(req.user);
+  //console.log(req.user);
   res.render('chat', { user: req.user });
 });
 
