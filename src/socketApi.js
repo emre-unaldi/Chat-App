@@ -29,6 +29,10 @@ io.on('connection', (socket) => {
 
     // Kullanıcı login olduğunda bu data redise kaydolacak.
     Users.upsert(socket.id, socket.request.user); // kullanıcı id ve data'larını verdik
+
+    socket.on('disconnect', () => {
+        Users.remove(socket.request.user.googleId);
+    });
 });
 
 module.exports = socketApi;

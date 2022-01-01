@@ -10,7 +10,7 @@ function Users(){ // Bu sınıf çalıştığında constructor da çalışmış 
 
 module.exports = new Users();
 
-// Ekleme fonksiyonu 
+// Kullanıcı ekleme fonksiyonu 
 Users.prototype.upsert = function (connectionId, meta){
     this.client.hset( 
         'online',  // myhash değerimizin karşılığı/adı
@@ -26,4 +26,17 @@ Users.prototype.upsert = function (connectionId, meta){
             }
         }
     )
+};
+
+// Kullanıcı silme fonksiyonu 
+Users.prototype.remove = function (googleId){
+    this.client.hdel(
+        'online',
+        googleId,
+        err => {
+            if(err){
+                console.log(err);
+            }
+        }
+    );
 };
