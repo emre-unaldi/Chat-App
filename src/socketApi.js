@@ -30,8 +30,18 @@ io.on('connection', (socket) => {
     // Kullanıcı login olduğunda bu data redise kaydolacak.
     Users.upsert(socket.id, socket.request.user); // kullanıcı id ve data'larını verdik
 
+    // Online kullanıcıları listeler.
+    Users.list((users) => {
+        console.log(users);
+    });
+
+    // Kullanıcı çıkış yaptığında ilgili kaydı siler. 
     socket.on('disconnect', () => {
         Users.remove(socket.request.user.googleId);
+        // Online kullanıcıları listeler.
+        Users.list((users) => {
+            console.log(users);
+        });
     });
 });
 

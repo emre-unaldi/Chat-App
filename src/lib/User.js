@@ -1,4 +1,5 @@
 const Redis = require('ioredis'); 
+const { use } = require('passport');
 
 // Users sınıfı
 function Users(){ // Bu sınıf çalıştığında constructor da çalışmış olcak ve redise bağlantı kurulacak.
@@ -39,4 +40,22 @@ Users.prototype.remove = function (googleId){
             }
         }
     );
+};
+
+// Kullanıcıları listeleme fonksiyonu
+Users.prototype.list = function (callback) {
+    let active = [];
+
+    this.client.hgetall('online', function (err, users) {
+        if(err){
+            console.log(err);
+            return callback([]);
+        }
+
+        for (let user in users){
+            active.push(JSON.parse(users[user]));
+        }
+
+        return callback(active);
+    })
 };
