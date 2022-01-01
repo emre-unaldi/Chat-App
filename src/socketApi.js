@@ -6,6 +6,9 @@ const socketApi = {
     io // io: io demektir. es6
 };
 
+// libs
+const Users = require('./lib/User');
+
 /*
   Socket Authorization
     socketio da bir middleware yazmak için io.use() dememiz yeterli.
@@ -24,7 +27,8 @@ io.adapter(redisAdapter({
 io.on('connection', (socket) => {
     console.log('a user logged in with name ' + socket.request.user.name);
 
-    socket.broadcast.emit('hello');
+    // Kullanıcı login olduğunda bu data redise kaydolacak.
+    Users.upsert(socket.id, socket.request.user); // kullanıcı id ve data'larını verdik
 });
 
 module.exports = socketApi;
