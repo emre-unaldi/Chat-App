@@ -36,14 +36,17 @@ io.on('connection', (socket) => {
         io.emit('onlineList', users); // kullanıcılara ilettik
     });
 
-    // newRoom emitini karşılar ve odayı redise ekler.
+    // newRoom emitini karşılar ve odayı redise ekler.Varolan odaları da arayüzde listeler
     socket.on('newRoom', (roomName) => {
         Rooms.upsert(roomName);
+        Rooms.list((rooms) => {
+            io.emit('roomList', rooms);
+        });
     });
 
     // Odaları listeleme
     Rooms.list((rooms) => {
-        console.log(rooms);
+        io.emit('roomList', rooms); 
     });
 
 
