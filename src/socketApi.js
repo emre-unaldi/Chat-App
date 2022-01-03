@@ -8,6 +8,7 @@ const socketApi = {
 
 // libs
 const Users = require('./lib/User');
+const Rooms = require('./lib/Room');
 
 /*
   Socket Authorization
@@ -34,6 +35,12 @@ io.on('connection', (socket) => {
     Users.list((users) => {
         io.emit('onlineList', users); // kullanıcılara ilettik
     });
+
+    // newRoom emitini karşılar ve odayı redise ekler.
+    socket.on('newRoom', (roomName) => {
+        Rooms.upsert(roomName);
+    });
+
 
     // Kullanıcı çıkış yaptığında ilgili kaydı siler. 
     socket.on('disconnect', () => {
