@@ -4,7 +4,7 @@ app.controller('chatController', ['$scope', ($scope) => {
      */
     $scope.onlineList = [];
     $scope.roomList = [];
-    $scope.activeTab = 2;
+    $scope.activeTab = 1;
 
     /**
      * Socket.io event handling.
@@ -25,8 +25,12 @@ app.controller('chatController', ['$scope', ($scope) => {
 
     // Oda Oluşturma fonksiyonu
     $scope.newRoom = () => {
-        let randomName = Math.random().toString(36).substring(7);
-        socket.emit('newRoom', (randomName)); // backende emit isteği yapıyoruz
+        //let randomName = Math.random().toString(36).substring(7);
+        let roomName = window.prompt("Enter room name");
+        if (roomName !== '' && roomName !== null ) {
+            socket.emit('newRoom', (roomName)); // backende emit isteği yapıyoruz
+        }
+        
     };
 
     $scope.changeTab = (tab) => {
