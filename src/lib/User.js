@@ -1,12 +1,8 @@
-const Redis = require('ioredis'); 
-const { use } = require('passport');
+const redisClient = require('../redisClient'); 
 
 // Users sınıfı
 function Users(){ // Bu sınıf çalıştığında constructor da çalışmış olcak ve redise bağlantı kurulacak.
-    this.client = Redis.createClient({
-        host: process.env.REDIS_URI,
-        port: process.env.REDIS_PORT
-    });
+    this.client = redisClient.getClient();
 }
 
 module.exports = new Users();
