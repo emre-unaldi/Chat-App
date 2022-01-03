@@ -41,6 +41,11 @@ io.on('connection', (socket) => {
         Rooms.upsert(roomName);
     });
 
+    // Odaları listeleme
+    Rooms.list((rooms) => {
+        console.log(rooms);
+    });
+
 
     // Kullanıcı çıkış yaptığında ilgili kaydı siler. 
     socket.on('disconnect', () => {
