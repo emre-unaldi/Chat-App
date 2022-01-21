@@ -37,8 +37,8 @@ io.on('connection', (socket) => {
         io.emit('onlineList', users); // kullanıcılara ilettik
     });
 
+    // newMessage emitini karşılar ve mesaj ile mesaj bilgisini redise ekler.
     socket.on('newMessage', (data) => {
-        console.log(data);
         Messages.upsert({
             ...data,
             username: socket.request.user.name,

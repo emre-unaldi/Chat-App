@@ -1,4 +1,5 @@
 const shortId = require('shortid'); // redis room id tanımı için paket 
+const lodash = require("lodash");  // js nesne ve objeleri üzerinde her türlü manipülasyon yapabilecek paket
 const redisClient = require('../redisClient'); 
 
 // Messages sınıfı
@@ -42,6 +43,8 @@ Messages.prototype.list = function (roomId, callback) {
             // jsonda data string olarak durduğu için jsona parse ediyoruz.
         }
         
-        return callback(messageList); // hata yoksa callback e messageList dizisini dön 
+        return callback(lodash.orderBy(messageList, 'when','asc')); 
+        // hata yoksa callback e messageList dizisini dön 
+        // lodashin orderby metoduyla diziyi when propertisine göre asc sıralar.
     })
 };
