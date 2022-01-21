@@ -15,6 +15,7 @@ dotenv.config(); // burda ise kullandık.
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth'); // auth route dosyasını dahil ettik.
 const chatRouter = require('./routes/chat') // chat route dosyasını dahil ettik.
+const messageRouter = require('./routes/messages') // messages route dosyasını dahil ettik.
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use(passport.session()); // session'ı passport.js ile kullanabilmek için t
 app.use('/', indexRouter);
 app.use('/auth', authRouter);  // auth route'ını kullandık.
 app.use('/chat', isAuthenticated, chatRouter); // middleware'ı chat router'ında kullandık
+app.use('/messages', isAuthenticated, messageRouter); // middleware'ı message router'ında kullandık
 
 
 // catch 404 and forward to error handler
