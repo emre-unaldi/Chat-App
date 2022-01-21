@@ -9,6 +9,7 @@ const socketApi = {
 // libs
 const Users = require('./lib/User');
 const Rooms = require('./lib/Room');
+const Messages = require('./lib/Message');
 
 /*
   Socket Authorization
@@ -38,6 +39,11 @@ io.on('connection', (socket) => {
 
     socket.on('newMessage', (data) => {
         console.log(data);
+        Messages.upsert({
+            ...data,
+            username: socket.request.user.name,
+            surname: socket.request.user.surname
+        });
     });
 
     // newRoom emitini karşılar ve odayı redise ekler.Varolan odaları da arayüzde listeler

@@ -13,10 +13,10 @@ Rooms.prototype.upsert = function (name){
     const newId = shortId.generate(); // odamızın id si - rediste aynı isimde odanın üstüne kayıt edilmemesi için
     this.client.hset( 
         'rooms',  // myhash değerimizin karşılığı/adı
-        '@Room' + newId, 
+        '@Room' + newId, // oda id'si
         JSON.stringify({ // oda ile ilgili detayları içeren data
             id: '@Room' + newId,
-            name,
+            name, // oda adı
             when: Date.now()
         }),
         err => {
