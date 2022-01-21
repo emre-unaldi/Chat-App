@@ -1,3 +1,4 @@
+const shortId = require('shortid'); // redis room id tanımı için paket 
 const redisClient = require('../redisClient'); 
 
 // Rooms sınıfı
@@ -8,12 +9,14 @@ function Rooms(){ // Bu sınıf çalıştığında constructor da çalışmış 
 module.exports = new Rooms();
 
 // Oda Oluşturma fonksiyonu 
-Rooms.prototype.upsert = function (roomName){
+Rooms.prototype.upsert = function (name){
+    const newId = shortId.generate(); // odamızın id si - rediste aynı isimde odanın üstüne kayıt edilmemesi için
     this.client.hset( 
         'rooms',  // myhash değerimizin karşılığı/adı
-        roomName, // odamızın adı roomName
+        '@Room' + newId, 
         JSON.stringify({ // oda ile ilgili detayları içeren data
-            roomName,
+            id: '@Room' + newId,
+            name,
             when: Date.now()
         }),
         err => {

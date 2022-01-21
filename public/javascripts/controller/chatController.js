@@ -25,6 +25,7 @@ app.controller('chatController', ['$scope', ($scope) => {
         $scope.$apply();
     });
 
+    // sohbet detayını arayüzde gösterme
     $scope.switchRoom = (room) => {
         $scope.chatName = room.roomName;
         $scope.chatClicked = true;
