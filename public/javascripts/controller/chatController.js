@@ -7,6 +7,8 @@ app.controller('chatController', ['$scope', ($scope) => {
     $scope.activeTab = 1;
     $scope.chatClicked = false;
     $scope.chatName = "";
+    $scope.roomId = "";
+    $scope.message = "";
 
     /**
      * Socket.io event handling.
@@ -25,9 +27,19 @@ app.controller('chatController', ['$scope', ($scope) => {
         $scope.$apply();
     });
 
+    // backend'e newMessage event'i isteği
+    $scope.newMessage = () => {
+        socket.emit('newMessage', {
+            message: $scope.message,
+            roomId: $scope.roomId
+        });
+        $scope.message = "";
+    };
+
     // sohbet detayını arayüzde gösterme
     $scope.switchRoom = (room) => {
-        $scope.chatName = room.roomName;
+        $scope.chatName = room.name
+        $scope.roomId = room.id;
         $scope.chatClicked = true;
     };
 
