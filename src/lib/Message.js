@@ -10,11 +10,12 @@ function Messages(){ // Bu sınıf çalıştığında constructor da çalışmı
 module.exports = new Messages();
 
 // Mesaj Oluşturma fonksiyonu 
-Messages.prototype.upsert = function ({ roomId, message, username, surname }){
+Messages.prototype.upsert = function ({ roomId, message, userId, username, surname }){
     this.client.hset( 
         'Messages:'+roomId,  
         shortId.generate(), // mesaj id
         JSON.stringify({ // mesaj ile ilgili detayları içeren data
+            userId, // mesajı yazan kullanıcı id
             username, // mesajı oluşturanın adı soyadı
             surname,
             message, // mesaj bilgisi kaydet

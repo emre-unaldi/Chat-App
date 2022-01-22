@@ -2,7 +2,7 @@ app.controller('chatController', ['$scope', 'chatFactory', 'userFactory', ($scop
     /**
      * initialization
      */
-    
+    // hangi kullanıcı ile girilmişse onun verisine erişmek için
     function init() {
         userFactory.getUser().then((user) => {
             $scope.user = user;
