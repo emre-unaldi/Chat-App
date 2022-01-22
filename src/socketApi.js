@@ -39,12 +39,16 @@ io.on('connection', (socket) => {
 
     // newMessage emitini karşılar ve mesaj ile mesaj bilgisini redise ekler.
     socket.on('newMessage', (data) => {
-        Messages.upsert({
+        const messageData = {
             ...data,
             userId: socket.request.user._id,
             username: socket.request.user.name,
             surname: socket.request.user.surname
-        });
+        };
+
+        Messages.upsert(messageData);
+
+        socket.broadcast.emit('receiveMessage', messageData);  // mesajların anlık olarak tüm istemcilerde gözükmesi
     });
 
     // newRoom emitini karşılar ve odayı redise ekler.Varolan odaları da arayüzde listeler

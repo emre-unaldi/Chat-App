@@ -41,6 +41,18 @@ app.controller('chatController', ['$scope', 'chatFactory', 'userFactory', ($scop
         $scope.$apply();
     });
 
+    // mesajların anlık olarak gösterilmesi
+    socket.on('receiveMessage', (data) => {
+        $scope.messages[data.roomId].push({
+            userId: data.userId,
+            username: data.username,
+            surname: data.surname,
+            message: data.message
+        });
+
+        $scope.$apply();
+    });
+
     // backend'e newMessage event'i isteği
     $scope.newMessage = () => {
         if ($scope.message.trim() !== ''){  // mesaj kutusu boş değilse
@@ -49,9 +61,10 @@ app.controller('chatController', ['$scope', 'chatFactory', 'userFactory', ($scop
                 roomId: $scope.roomId
             });
 
+            // kullanıcının mesajlarının gösterilmesi
             $scope.messages[$scope.roomId].push({
                 userId: $scope.user._id,
-                username: $scope.user.username,
+                username: $scope.user.name,
                 surname: $scope.user.surname,
                 message: $scope.message
             });
