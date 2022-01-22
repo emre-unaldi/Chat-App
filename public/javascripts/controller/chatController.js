@@ -58,12 +58,23 @@ app.controller('chatController', ['$scope', 'chatFactory', 'userFactory', ($scop
         $scope.roomId = room.id;
 
         $scope.chatClicked = true;
-        $scope.loadingMessages = true;
+       
+        /*
+            Mesaj verisi varsa tekrardan servise bağlanmadan varolan veriyi kullanmak ve 
+            sürekli olarak bağlantı kurmamak için kontrol yapısı kuruldu.
+        */
+        if (!$scope.messages.hasOwnProperty(room.id)){ // room.id de key yoksa cliente yani servise bağlanacak veriyi cekecek 
+            $scope.loadingMessages = true;
 
-        chatFactory.getMessages(room.id).then((data) => { // angular servisi ile mesajları çekme
-            $scope.messages[room.id] = data;
-            $scope.loadingMessages = false;
-        })
+            //console.log('Servise Bağlanıyor...');
+
+            chatFactory.getMessages(room.id).then((data) => { // angular servisi ile mesajları çekme
+                $scope.messages[room.id] = data;
+                $scope.loadingMessages = false;
+            })
+        }
+
+        
     };
 
     // Oda Oluşturma fonksiyonu
