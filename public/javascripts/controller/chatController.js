@@ -43,13 +43,21 @@ app.controller('chatController', ['$scope', 'chatFactory', 'userFactory', ($scop
 
     // backend'e newMessage event'i isteği
     $scope.newMessage = () => {
-        socket.emit('newMessage', {
-            message: $scope.message,
-            roomId: $scope.roomId
-        });
-        $scope.message = "";
+        if ($scope.message.trim() !== ''){  // mesaj kutusu boş değilse
+            socket.emit('newMessage', {
+                message: $scope.message,
+                roomId: $scope.roomId
+            });
 
-        console.log($scope.user);
+            $scope.messages[$scope.roomId].push({
+                userId: $scope.user._id,
+                username: $scope.user.username,
+                surname: $scope.user.surname,
+                message: $scope.message
+            });
+
+            $scope.message = "";
+        }
     };
 
     // sohbet detayını arayüzde gösterme
