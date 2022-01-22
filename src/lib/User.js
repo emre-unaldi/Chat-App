@@ -11,7 +11,7 @@ module.exports = new Users();
 Users.prototype.upsert = function (connectionId, meta){
     this.client.hset( 
         'online',  // myhash değerimizin karşılığı/adı
-        meta.googleId, // kullanıcımızın id si
+        meta._id, // kullanıcımızın id si
         JSON.stringify({ // kullanıcı ile ilgili detayları içeren data
             connectionId,
             meta,
@@ -26,10 +26,10 @@ Users.prototype.upsert = function (connectionId, meta){
 };
 
 // Kullanıcı silme fonksiyonu 
-Users.prototype.remove = function (googleId){
+Users.prototype.remove = function (_id){
     this.client.hdel(
         'online',
-        googleId,
+        _id,
         err => {
             if(err){
                 console.log(err);

@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
 
     // Kullanıcı çıkış yaptığında ilgili kaydı siler. 
     socket.on('disconnect', () => {
-        Users.remove(socket.request.user.googleId);
+        Users.remove(socket.request.user._id);
         // Online kullanıcıları listeler.
         Users.list((users) => {
             io.emit('onlineList', users);
